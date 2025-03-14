@@ -1,0 +1,18 @@
+{% extends "main/layout.html" %}
+{% block title%}Вход{% endblock %}
+
+{% block content%}
+    <div class="features">
+        <h1>Вход в систему</h1>
+        <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Войти</button>
+    </form>
+    </div>
+{% endblock %}
