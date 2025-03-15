@@ -1,0 +1,147 @@
+body {
+    background: #2c2c2c;
+}
+
+header {
+    background: #2c2c2c;
+    float: right;
+    position: relative;
+    height: 100px;
+}
+
+header span {
+    color: white;
+    text-decoration: none;
+}
+
+.header span a {
+  text-decoration: none; /* Убираем подчеркивание ссылок */
+  color: white; /* Цвет текста */
+  padding: 10px 15px; /* Внутренние отступы для пунктов меню */
+  display: block; /* Делаем ссылки блочными для удобства клика */
+}
+
+.header span a:hover {
+    color: blue;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+.menu {
+    color: white;
+    display: flex;
+    margin-top: 20px;
+    transition: transform .6s ease;
+}
+
+.menu li {
+    margin-right: 20px;
+}
+
+.menu a {
+  text-decoration: none; /* Убираем подчеркивание ссылок */
+  color: white; /* Цвет текста */
+  padding: 10px 15px; /* Внутренние отступы для пунктов меню */
+  display: block; /* Делаем ссылки блочными для удобства клика */
+}
+
+.menu a:hover {
+    color: blue;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+.user {
+    display: flex;
+}
+
+.user form {
+    margin-top: 0px;
+    margin-left: 10%;
+    position: relative;
+}
+
+.user form {
+    width: 90px;
+}
+
+aside {
+    float: left;
+    background: #181818;
+    width: 20%;
+    padding: 2.5%;
+    height: 100vh;
+    color: white;
+    border-right: 5px solid #4d4d4d;
+}
+
+img {
+    width: 120px;
+    height: 120px;
+    float: left;
+}
+
+aside .logo {
+    font-size: 40px;
+    margin-left: 10px;
+    font-weight: bold;
+    position: relative;
+    top: -5px;
+}
+
+aside h3 {
+    margin-top: 50px;
+    font-size: 23px;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    color: white;
+    display: block;
+    margin-top: 20px;
+    transition: transform .6s ease;
+}
+
+aside ul li:hover, aside ul a:hover {
+    color: blue;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+aside a {
+    text-decoration: none;
+}
+
+main .features {
+    float: left;
+    color: white;
+    margin-top: 100px;
+    text-align: center;
+    width: 75%;
+}
+
+main .features h1 {
+    font-size: 50px;
+}
+
+main .features p {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.alert-warning {
+    float: left;
+    clear: both;
+    width: 400px;
+    margin: 20px 34%;
+    text-align: left;
+}
+
+form {
+    margin-left: 32%;
+    width: 500px;
+    margin-top: 50px;
+}

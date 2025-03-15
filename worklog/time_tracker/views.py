@@ -1,39 +1,45 @@
-from django.shortcuts import render
-from django.db.models import Sum
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from rest_framework.decorators import action
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import TimeEntry
-from .serializers import TimeEntrySerializer, ReportSerializer
 from projects.models import Project
+from django.db.models import Sum
 
 
-class TimeEntryViewSet(viewsets.ModelViewSet):
-    queryset = TimeEntry.objects.all()
-    serializer_class = TimeEntrySerializer
+@login_required
+def add_worklog(request):
+    if request.method == 'POST':
+        project_id = request.POST.get('project_id')
+        date = request.POST.get('date')
+        hours = request.POST.get('hours')
 
-    @action(detail=False, methods=['GET'])
-    def report(self, request):
-        project_id = request.query_params.get('project_id')
-        start_date = request.query_params.get('start_date')
-        end_date = request.query_params.get('end_date')
-        
-        # Проверка прав (только менеджер проекта)
-        project = Project.objects.get(id=project_id)
-        if request.user != project.manager:
-            return Response({'error': 'Доступ запрещен'}, status=403)
-        
-        # Формирование отчета
-        entries = TimeEntry.objects.filter(
-            project=project_id,
-            date__gte=start_date,
-            date__lt=end_date
-        ).values('user').annotate(total_hours=Sum('hours'))
-        
-        report_data = [
-            {'id': entry['user'], 'hours': entry['total_hours']}
-            for entry in entries
-        ]
-        
-        serializer = ReportSerializer(report_data, many=True)
-        return Response(serializer.data)
+        # Создание записи о времени
+        TimeEntry.objects.create(
+            user=request.user,
+            project_id=project_id,
+            date=date,
+            hours=hours
+        )
+        return redirect('add_time')  # Перенаправление на страницу добавления времени
+
+    projects = Project.objects.all()
+    return render(request, 'add_time.html', {'projects': projects})
+
+@login_required
+def generate_report(request):
+    if request.method == 'GET':
+        project_id = request.GET.get('project_id')
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+        # Проверка, является ли пользователь менеджером
+        if request.user.is_manager:
+            report = (
+                TimeEntry.objects
+                .filter(project_id=project_id, date__gte=start_date, date__lt=end_date)
+                .values('user_id')
+                .annotate(hours=Sum('hours'))
+            )
+            return render(request, 'create_report.html', {'report': report})
+
+    projects = Project.objects.all()
+    return render(request, 'create_report.html', {'projects': projects})

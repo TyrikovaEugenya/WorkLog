@@ -1,0 +1,32 @@
+{% extends "main/layout.html" %}
+{% block title%}Сгенерировать отчет{% endblock %}
+
+{% block content%}
+    <div class="features">
+        <h1>Отчет</h1>
+        <form method="GET" action="{% url 'generate_report' %}">
+            <label for="project">Проект:</label>
+            <select id="project" name="project_id">
+                {% for project in projects %}
+                    <option value="{{ project.id }}">{{ project.name }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="start_date">Дата начала:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <br>
+            <label for="end_date">Дата окончания:</label>
+            <input type="date" id="end_date" name="end_date" required>
+            <br>
+            <button type="submit">Сформировать отчет</button>
+        </form>
+        {% if report %}
+            <h2>Результаты отчета</h2>
+            <ul>
+                {% for entry in report %}
+                    <li>Пользователь ID: {{ entry.id }}, Часы: {{ entry.hours }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

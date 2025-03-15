@@ -1,0 +1,25 @@
+{% extends "main/layout.html" %}
+{% block title%}Добавить время работы{% endblock %}
+
+{% block content%}
+    <div class="features">
+        <h1>Форма для добавления времени работы</h1>
+    <form method="POST" action="{% url 'add_worklog' %}">
+        {% csrf_token %}
+        <label for="project">Проект:</label>
+        <select id="project" name="project_id">
+            {% for project in projects %}
+                <option value="{{ project.id }}">{{ project.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="date">Дата:</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+        <label for="hours">Часы:</label>
+        <input type="number" id="hours" name="hours" required>
+        <br>
+        <button type="submit">Сохранить</button>
+    </form>
+    </div>
+{% endblock %}

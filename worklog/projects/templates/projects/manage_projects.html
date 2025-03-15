@@ -1,0 +1,22 @@
+{% extends "main/layout.html" %}
+{% block title%}Управление проектами{% endblock %}
+
+{% block content%}
+    <div class="features">
+        <h1>Управление проектами</h1>
+    <form method="POST" action="{% url 'add_project' %}">
+        {% csrf_token %}
+        <label for="project_name">Название проекта:</label>
+        <input type="text" id="project_name" name="project_name" required>
+        <br>
+        <button type="submit">Добавить проект</button>
+    </form>
+
+    <h2>Существующие проекты</h2>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.name }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+{% endblock %}
